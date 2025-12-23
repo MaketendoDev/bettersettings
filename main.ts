@@ -18,18 +18,28 @@ function arrayToImage(value: Array<number>, width: number, height: number): Imag
     return img;
 }
 
-function stringToNumberArray(value: Array<string>): Array<number> {
-    let result = [];
+function stringFromNumberArray(value: Array<number>): Array<string> {
+    if (!value || value.length === 0) return [];
+
+    let result: Array<string> = [];
+    let current = "";
+
     for (let i = 0; i < value.length; i++) {
-        for (let j = 0; j < value[i].length; j++) {
-            result.push(value[i].charCodeAt(j));
-        }
-        if (i < value.length - 1) {
-            result.push(-1);
+        if (value[i] === -1) {
+            result.push(current);
+            current = "";
+        } else {
+            current += String.fromCharCode(value[i]);
         }
     }
+
+    if (current.length > 0) {
+        result.push(current);
+    }
+
     return result;
 }
+
 
 function stringFromNumberArray(value: Array<number>): Array<string> {
     let result = [];
